@@ -1,0 +1,70 @@
+bio:
+  sk: "Ing. arch. Viktor Krkoška, absolvent Fakulty architektúry a dizajnu STU v Bratislave so semestrálnym pobytom na École Nationale Supérieure d'Architecture de Lyon. Od 9/2022 do 6/2026 pôsobil v ateliéri Hantabal architekti, kde prešiel celým procesom projektu — od konceptu cez technické výkresy a rendering až po 3D tlač fyzických modelov a prípravu prezentácií pre klienta."
+  en: "Ing. arch. Viktor Krkoška, a graduate of the Faculty of Architecture and Design at the Slovak University of Technology (STU) in Bratislava, with a semester abroad at the École Nationale Supérieure d'Architecture de Lyon. From 9/2022 to 6/2026 he worked at Hantabal architekti, where he went through the entire project process — from concept through technical drawings and rendering to 3D-printing physical models and preparing client presentations."
+facts:
+  - k: { sk: "vzdelanie", en: "education" }
+    v: { sk: "Bilingválne gymnázium Metodova · FAD STU Bratislava · ENSA Lyon", en: "Bilingválne gymnázium Metodova · FAD STU Bratislava · ENSA Lyon" }
+  - k: { sk: "prax", en: "experience" }
+    v: { sk: "Hantabal architekti, 9/2022-6/2026", en: "Hantabal architekti, 9/2022-6/2026" }
+  - k: { sk: "jazyky", en: "languages" }
+    v: { sk: "SK, EN, FR", en: "SK, EN, FR" }
+skills:
+  - name: { sk: "Komunikatívnosť", en: "Communication" }
+    pct: 88
+  - name: { sk: "Kreativita", en: "Creativity" }
+    pct: 88
+  - name: { sk: "ArchiCAD", en: "ArchiCAD" }
+    pct: 90
+  - name: { sk: "AutoCAD", en: "AutoCAD" }
+    pct: 60
+  - name: { sk: "Revit", en: "Revit" }
+    pct: 60
+  - name: { sk: "Vectorworks", en: "Vectorworks" }
+    pct: 70
+  - name: { sk: "Microstation", en: "Microstation" }
+    pct: 70
+  - name: { sk: "Sketchup", en: "Sketchup" }
+    pct: 90
+  - name: { sk: "Rhinoceros 3d", en: "Rhinoceros 3D" }
+    pct: 80
+  - name: { sk: "Twinmotion", en: "Twinmotion" }
+    pct: 90
+  - name: { sk: "D5 Render", en: "D5 Render" }
+    pct: 90
+  - name: { sk: "Affinity/Adobe suite", en: "Affinity/Adobe suite" }
+    pct: 90
+  - name: { sk: "Fotografia", en: "Photography" }
+    pct: 90
+photos:
+  - image: /images/hobby-centre-pompidou.jpg
+    alt: { sk: "Centre Pompidou, Paríž — exteriérové eskalátory", en: "Centre Pompidou, Paris — exterior escalators" }
+  - image: /images/hobby-lyon.jpg
+    alt: { sk: "Lyon — centrum, schodisko historickej budovy", en: "Lyon — city centre, staircase of a historic building" }
+  - image: /images/hobby-en-29.jpg
+    alt: { sk: "Maison Carrée, Nîmes", en: "Maison Carrée, Nîmes" }
+  - image: /images/hobby-lyon-bgg-319.jpg
+    alt: { sk: "La Confluence, Lyon — presklená hala industriálnej konverzie", en: "La Confluence, Lyon — glazed hall of an industrial conversion" }
+  - image: /images/hobby-en-32.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier", en: "La Tourette Monastery, Le Corbusier" }
+  - image: /images/hobby-lyon-04.jpg
+    alt: { sk: "La Confluence, Lyon — vlnitá fasáda", en: "La Confluence, Lyon — undulating façade" }
+  - image: /images/hobby-en-39.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — fasáda ciel radieux", en: "La Tourette Monastery, Le Corbusier — ciel radieux façade" }
+  - image: /images/hobby-lyon-bgg-320.jpg
+    alt: { sk: "La Confluence, Lyon — presklená strecha industriálnej konverzie", en: "La Confluence, Lyon — glazed roof of an industrial conversion" }
+  - image: /images/hobby-en-41.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — detail fasády ciel radieux", en: "La Tourette Monastery, Le Corbusier — detail of the ciel radieux façade" }
+  - image: /images/hobby-lyon-05.jpg
+    alt: { sk: "La Confluence, Lyon — vstupné dvere, pohľadový betón", en: "La Confluence, Lyon — entrance door, fair-faced concrete" }
+  - image: /images/hobby-en-43.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — roh fasády", en: "La Tourette Monastery, Le Corbusier — corner of the façade" }
+  - image: /images/hobby-lyon-07.jpg
+    alt: { sk: "La Confluence, Lyon — roh budovy, pohľadový betón a drevo", en: "La Confluence, Lyon — corner of the building, fair-faced concrete and timber" }
+  - image: /images/hobby-en-48.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — strešná terasa", en: "La Tourette Monastery, Le Corbusier — roof terrace" }
+  - image: /images/hobby-lyon-23.jpg
+    alt: { sk: "Lyon — centrum, roh bytového domu", en: "Lyon — city centre, corner of an apartment building" }
+  - image: /images/hobby-en-54.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — interiérový detail", en: "La Tourette Monastery, Le Corbusier — interior detail" }
+  - image: /images/hobby-en-61.jpg
+    alt: { sk: "Kláštor La Tourette, Le Corbusier — chodba ku kaplnke", en: "La Tourette Monastery, Le Corbusier — corridor to the chapel" }

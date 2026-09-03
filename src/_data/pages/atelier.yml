@@ -1,0 +1,45 @@
+intro:
+  sk:
+    - '<b>ORDUM studio</b> je architektonický ateliér, ktorý sa zaoberá navrhovaním, ktoré stavia na existujúcom — na mieste, jeho histórii a materiáli — namiesto toho, aby ho prekrylo.'
+    - 'Meno spája latinské <em>ordo</em>, poriadok, so segmentom odkazujúcim na <em>stratum</em>, vrstvu. Každý zásah do priestoru chápeme ako ďalšiu vrstvu v čase miesta, nie ako jeho vymazanie.'
+  en:
+    - '<b>ORDUM studio</b> is an architecture practice concerned with design that builds on what already exists — the place, its history and material — rather than covering it over.'
+    - 'The name joins the Latin <em>ordo</em>, order, with a segment referencing <em>stratum</em>, layer. We understand every intervention in space as another layer in the time of a place, not as its erasure.'
+flow:
+  sk: ["kontext", "koncept", "transformácia", "poriadok"]
+  en: ["context", "concept", "transformation", "order"]
+principles:
+  - num: "01"
+    title: { sk: "Kontext a každodennosť", en: "Context and everyday life" }
+    body:
+      sk: "Architektúra nevzniká izolovane. Čítame miesto — jeho históriu, urbanistické väzby, mierku, sociálne vzťahy aj každodennosť. Zaujíma nás nielen samotná budova, ale aj to, čo sa deje medzi ňou a mestom. Architektúra je súčasťou života miesta, nie samostatným artefaktom."
+      en: "Architecture does not arise in isolation. We read the place — its history, urban connections, scale, social relationships and everyday life. We are interested not only in the building itself but in what happens between it and the city. Architecture is part of the life of a place, not a standalone artefact."
+  - num: "02"
+    title: { sk: "Transformácia a vrstvenie", en: "Transformation and layering" }
+    body:
+      sk: "Existujúcu štruktúru nevnímame ako prekážku, ale ako zdroj. Zachovávame hodnotné, prehodnocujeme nefunkčné, dopĺňame chýbajúce a vytvárame nové. Mesto a architektúra sú vrstvy času, funkcií, materiálov a udalostí. Nový zásah preto nevnímame ako začiatok od nuly, ale ako ďalšiu vrstvu v kontinuálnom vývoji miesta."
+      en: "We see an existing structure not as an obstacle but as a resource. We preserve what has value, reconsider what no longer works, add what is missing, and create what is new. The city and its architecture are layers of time, function, material and event. A new intervention is therefore not a start from zero, but another layer in the continuous evolution of a place."
+  - num: "03"
+    title: { sk: "Jasný rád, otvorený systém", en: "Clear order, open system" }
+    body:
+      sk: "Hľadáme systém, modul alebo pravidlo, ktoré dá projektu vnútornú logiku. Nemá však byť rigidný — dobrý systém umožňuje variabilitu, prispôsobenie aj nepredvídané situácie. Rád chápeme ako nástroj, nie ako dogmu."
+      en: "We look for a system, module or rule that gives a project its inner logic. It should not, however, be rigid — a good system allows for variability, adaptation and unforeseen situations. We treat order as a tool, not a dogma."
+  - num: "04"
+    title: { sk: "Priestor pred gestom", en: "Space before gesture" }
+    body:
+      sk: "Forma je dôsledkom premysleného konceptu, nie cieľom sama o sebe. Prednosť majú mierka, proporcia, materiál, svetlo, konštrukcia, priestorové vzťahy a spôsob používania. Menej nás zaujíma efektné gesto, viac kvalita priestoru a jeho schopnosť vytvárať atmosféru."
+      en: "Form follows from a considered concept, not an end in itself. Priority goes to scale, proportion, material, light, structure, spatial relationships and use. We care less about a striking gesture, more about the quality of space and its ability to create atmosphere."
+  - num: "05"
+    title: { sk: "Dlhý život architektúry", en: "A long life for architecture" }
+    body:
+      sk: "Dobrá architektúra nemusí dokonale fungovať iba pre jeden scenár. Mala by byť schopná absorbovať zmenu — zmenu funkcie, spôsobu používania aj potrieb spoločnosti. Robustnosť, flexibilita a možnosť budúcej transformácie predlžujú život architektúry a znižujú potrebu začínať odznova."
+      en: "Good architecture need not work perfectly for only one scenario. It should be able to absorb change — of function, of use, and of society's needs. Robustness, flexibility and the possibility of future transformation extend the life of architecture and reduce the need to start over."
+facts:
+  - k: { sk: "Založené", en: "Founded" }
+    v: { sk: "2026", en: "2026" }
+  - k: { sk: "Zakladateľ", en: "Founder" }
+    v: { sk: "Ing. arch. Viktor Krkoška", en: "Ing. arch. Viktor Krkoška" }
+  - k: { sk: "Právna forma", en: "Legal form" }
+    v: { sk: "ORDUM studio, s.r.o.", en: "ORDUM studio, s.r.o." }
+  - k: { sk: "Status", en: "Status" }
+    v: { sk: "k dispozícii", en: "available" }

@@ -1,0 +1,78 @@
+---
+pagination:
+  data: collections.projectPages
+  size: 1
+  alias: pp
+permalink: "{% if pp.locale == 'en' %}/en/project-{{ pp.project.number }}.html{% else %}/project-{{ pp.project.number }}.html{% endif %}"
+eleventyComputed:
+  lang: "{{ pp.locale }}"
+  title: "ORDUM studio — {{ pp.project.page_title[pp.locale] }}"
+  navActive: ""
+  langUrls:
+    sk: "/project-{{ pp.project.number }}.html"
+    en: "/en/project-{{ pp.project.number }}.html"
+layout: layouts/base.njk
+---
+{% set project = pp.project %}
+{% set locale = pp.locale %}
+{% set L = project[locale] %}
+
+<div class="content">
+  <a href="{{ nav.prace }}" class="back-link">{{ t.backToIndex }}</a>
+
+  <div class="detail-head-grid">
+    <div class="detail-head-text">
+      <div style="padding-top:24px;">
+        <span class="mono grey">{{ project.number }}</span>
+        <h1 class="title" style="margin-top:6px;">{{ L.title }}</h1>
+      </div>
+
+      <div class="detail-meta">
+        {% for row in project.meta_rows %}
+        <div><span class="k">{{ row.label[locale] }}</span>{{ row.value[locale] }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="detail-desc{% if project.desc_tight %} tight{% endif %}">
+        {% for p in project.body[locale] %}
+        <p{% if not loop.last %} style="margin-bottom:1em;"{% endif %}>{{ p }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="detail-thumb">
+      <img src="{{ project.hero.image }}" alt="{{ project.hero.alt[locale] }}">
+    </div>
+  </div>
+
+  {% if project.sketch_block %}
+  <div class="sketch-block">
+    <a href="{{ project.sketch_block.image }}"><img src="{{ project.sketch_block.image }}" alt="{{ project.sketch_block.caption[locale] }}"></a>
+    <span class="cap">{{ project.sketch_block.caption[locale] }}</span>
+  </div>
+  {% endif %}
+
+  <div class="gallery">
+    {% for img in project.gallery %}
+    <a href="{{ img.image }}" target="_blank" rel="noopener"{% if img.wide %} class="wide"{% endif %}><img src="{{ img.image }}" alt="{{ img.alt[locale] }}"></a>
+    {% endfor %}
+  </div>
+
+  {% if project.drawings and project.drawings.length %}
+  <div class="drawings">
+    <span class="section-label">{{ t.drawingsLabel }}</span>
+    {% for d in project.drawings %}
+    <div class="drawing-item">
+      <a href="{{ d.image }}" target="_blank" rel="noopener"><img src="{{ d.image }}" alt="{{ d.caption[locale] }}"></a>
+      <div class="dcap">{{ d.caption[locale] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="project-nav">
+  <a href="{% if locale == 'en' %}/en/project-{{ pp.prev.number }}.html{% else %}/project-{{ pp.prev.number }}.html{% endif %}" class="pn-prev">{{ t.prevProject }}</a>
+  <a href="{{ nav.prace }}" class="pn-index">{{ t.projectIndex }}</a>
+  <a href="{% if locale == 'en' %}/en/project-{{ pp.next.number }}.html{% else %}/project-{{ pp.next.number }}.html{% endif %}" class="pn-next">{{ t.nextProject }}</a>
+</div>

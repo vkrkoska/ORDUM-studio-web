@@ -1,0 +1,35 @@
+<div id="prace"></div>
+
+<div class="controls">
+  <div class="content controlbar">
+    <span class="mono grey">{{ t.projectIndex }}</span>
+    <div class="filters" id="filters">
+      <button class="active" data-filter="all">{{ t.filterAll }}</button>
+      <button data-filter="verejne">{{ t.filterVerejne }}</button>
+      <button data-filter="revitalizacia">{{ t.filterRevitalizacia }}</button>
+      <button data-filter="skola">{{ t.filterSkola }}</button>
+      <button data-filter="kultura">{{ t.filterKultura }}</button>
+    </div>
+    <span class="mono grey" id="rowcount">{{ collections.projects.length }}{% if lang == "en" %} entries{% else %} záznamov{% endif %}</span>
+  </div>
+</div>
+
+<div class="proj-grid" id="list">
+{% for p in collections.projects %}
+{% set L = p.data[lang] %}
+    <a href="{% if lang == 'en' %}/en/project-{{ p.data.number }}.html{% else %}/project-{{ p.data.number }}.html{% endif %}" class="proj-card" data-cat="{{ p.data.category }}" data-search="{{ L.search }}">
+      <div class="proj-thumb">
+        <img src="{{ p.data.thumbnail.image }}" alt="{{ p.data.thumbnail.alt[lang] }}">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">{{ p.data.number }}</span>
+          <span class="ptitle">{{ L.title }}</span>
+          <span class="place">{{ L.place }}</span>
+          <span class="ptag">{{ L.tag }}</span>
+        </div>
+      </div>
+    </a>
+{% endfor %}
+  </div>
+<div class="empty-state" id="emptyState">{{ t.emptyState }}</div>
+<p class="note">{{ t.galleryNote }}</p>

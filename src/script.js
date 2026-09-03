@@ -1,6 +1,14 @@
 // mark JS as active — CSS only hides .reveal elements when this class is present
 document.documentElement.classList.add('js-enabled');
 
+// small UI-string dictionary for the handful of strings script.js generates/injects itself
+// (page content is already localized server-side by Eleventy — this only covers JS-authored text)
+const LANG = document.documentElement.lang === 'en' ? 'en' : 'sk';
+const STR = {
+  sk: { record1: ' záznam', record24: ' záznamy', record5: ' záznamov', close: 'Zavrieť', prevImg: 'Predchádzajúci obrázok', nextImg: 'Nasledujúci obrázok' },
+  en: { record1: ' entry', record24: ' entries', record5: ' entries', close: 'Close', prevImg: 'Previous image', nextImg: 'Next image' },
+}[LANG];
+
 // measure the real header/footer height instead of guessing it in CSS — keeps the scroll
 // track (and its start/end thumb) flush with zero gap against both, at any viewport size
 const headerEl = document.querySelector('header');
@@ -97,7 +105,7 @@ function applyFilters(){
     row.classList.toggle('hidden', !match);
     if(match) visible++;
   });
-  rowcount.textContent = visible + (visible === 1 ? ' záznam' : (visible < 5 ? ' záznamy' : ' záznamov'));
+  rowcount.textContent = visible + (visible === 1 ? STR.record1 : (visible < 5 ? STR.record24 : STR.record5));
   emptyState.classList.toggle('show', visible === 0);
 }
 
@@ -133,10 +141,10 @@ if(lbLinks.length){
   const lbOverlay = document.createElement('div');
   lbOverlay.className = 'lightbox';
   lbOverlay.innerHTML =
-    '<button class="lb-close" aria-label="Zavrieť">✕</button>' +
-    '<button class="lb-prev" aria-label="Predchádzajúci obrázok">←</button>' +
+    '<button class="lb-close" aria-label="' + STR.close + '">✕</button>' +
+    '<button class="lb-prev" aria-label="' + STR.prevImg + '">←</button>' +
     '<img class="lb-img" src="" alt="">' +
-    '<button class="lb-next" aria-label="Nasledujúci obrázok">→</button>' +
+    '<button class="lb-next" aria-label="' + STR.nextImg + '">→</button>' +
     '<div class="lb-caption"></div>';
   document.body.appendChild(lbOverlay);
 

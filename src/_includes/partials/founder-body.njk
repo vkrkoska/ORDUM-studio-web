@@ -1,0 +1,42 @@
+<div class="content" style="padding-top:26px;">
+  <a href="{{ nav.atelier }}" class="back-link">{{ t.backToAtelier }}</a>
+</div>
+
+<div class="page-head"><span class="mono grey">{{ t.founder }}</span></div>
+
+<section class="statement short">
+  <div class="content">
+    <p>{{ pages['viktor-krkoska'].bio[lang] }}</p>
+  </div>
+</section>
+
+<div class="facts no-top-border">
+  {% for f in pages['viktor-krkoska'].facts %}
+  <div class="fact"><span class="k">{{ f.k[lang] }}</span><span class="v">{{ f.v[lang] }}</span></div>
+  {% endfor %}
+</div>
+
+<div class="content">
+  <div class="skills">
+    <span class="section-label">{{ t.skillsLabel }}</span>
+
+    {% for s in pages['viktor-krkoska'].skills %}
+    <div class="skill-row">
+      <span class="skill-name">{{ s.name[lang] }}</span>
+      <div class="skill-track"><div class="skill-fill" data-pct="{{ s.pct }}"></div></div>
+      <span class="skill-pct">{{ s.pct }}%</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="content">
+  <div class="photo-section">
+    <span class="section-label">{{ t.photoLabel }}</span>
+  <div class="photo-grid">
+    {% for ph in pages['viktor-krkoska'].photos %}
+    <a href="{{ ph.image }}"><img src="{{ ph.image }}" alt="{{ ph.alt[lang] }}"></a>
+    {% endfor %}
+  </div>
+  </div>
+</div>
