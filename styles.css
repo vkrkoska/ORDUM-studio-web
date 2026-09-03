@@ -1,0 +1,561 @@
+/* ORDUM studio — shared stylesheet
+   Type system: Inter only — Light 300 / Regular 400 / Bold 700 / ExtraBold 800.
+   No IBM Plex Mono, no letter-spacing tricks — this matches the fonts actually
+   embedded in the design PDF (design/ORDUM.pdf), extracted directly from it.
+   All sizes and the left gutter/content grid below are derived 1:1 from that
+   PDF's 2560px-wide reference frame (1pt there == 1px here), scaled with vw
+   and capped at the PDF's exact px value so desktop matches it exactly. */
+
+:root{
+  --ink:#0A0A0A;
+  --paper:#FFFFFF;
+  --grey:#6E6E6E;
+  --dim:#d6d6d6;
+  --hairline:#CCCCCC;             /* exact divider grey measured in the PDF (rgb 204,204,204) */
+  --hair: var(--hairline);
+  --tint: rgba(0,17,255,0.15);    /* active nav/filter pill fill — measured 15% accent opacity */
+  --accent:#0011ff;
+
+  /* type scale — each step is a straight vw-scale of a PDF pt size, capped at that exact px */
+  --fs-2xs: clamp(11px, 0.7813vw, 20px);        /* Inter Light 20pt — nav, filters, meta, footer, captions */
+  --fs-sm:  clamp(13px, 0.9766vw, 25px);        /* Inter 25pt — wordmark, ORDO/STRATUM, body copy, facts */
+  --fs-lg:  clamp(26px, 2.5vw, 64px);           /* Inter Bold 64pt — page titles, contact links */
+  --fs-hero: clamp(64px, 23.4375vw, 37.5rem);   /* Inter ExtraBold 600pt — landing wordmark */
+
+  /* legacy aliases kept so nothing silently breaks; map onto the scale above */
+  --mono-sm: var(--fs-2xs);
+  --mono-md: var(--fs-2xs);
+  --body: var(--fs-sm);
+  --title: var(--fs-lg);
+  --brand: var(--fs-sm);
+
+  /* grid: left gutter + content padding, both derived from the same 2560px frame */
+  --gutter: clamp(56px, 5.9375vw, 152px);          /* grey vertical rule from the left edge */
+  --nav-pad-l: clamp(16px, 1.105vw, 28px);         /* header row left padding — wordmark position */
+  --nav-pad-r: clamp(22px, 1.543vw, 40px);         /* header row right padding — icons/SK-EN position */
+  --content-pad-l: clamp(28px, 10.352vw, 265px);   /* main content left padding = gutter + inner pad */
+  --content-pad-r: clamp(16px, 4.414vw, 113px);    /* main content right padding */
+  --hero-pad: clamp(28px, 10.352vw, 265px);        /* landing hero — symmetric both sides */
+  --header-h: clamp(46px, 2.969vw, 76px);          /* header's own rendered height (nav padding + content) */
+  --footer-h: clamp(50px, 2.656vw, 68px);          /* footer's own rendered height (padding + line + border) */
+  --marker-gap: clamp(10px, 1.133vw, 29px);        /* PDF gap between header and the scroll-track square (top) */
+  --marker-gap-bottom: clamp(18px, 2vw, 46px);      /* a bit more breathing room at the footer end */
+}
+
+*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth; color-scheme:light; scrollbar-gutter:stable;}
+/* CSS scroll-snap was tried here (landing-screen → práce) but even "proximity" repeatedly
+   trapped discrete scroll gestures (mouse-wheel clicks) right at that boundary, blocking
+   further scrolling into the page — too risky to ship. The hero already ends exactly where
+   práce begins (zero gap, see .landing-screen), so the transition is already seamless
+   without needing snap at all. */
+body{
+  background-color:var(--paper);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  font-weight:400;
+  font-size:var(--fs-sm);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+a{color:inherit; text-decoration:none;}
+::selection{background:var(--ink); color:var(--paper);}
+em{font-style:italic;}
+
+.mono{
+  font-family:'Inter', sans-serif;
+  font-weight:300;
+  font-size:var(--fs-2xs);
+}
+.mono.md{font-size:var(--fs-2xs);}
+.grey{color:var(--grey);}
+
+.bold{font-family:'Inter', sans-serif; font-weight:700; letter-spacing:-0.01em;}
+.title{font-family:'Inter', sans-serif; font-weight:700; font-size:var(--title); letter-spacing:-0.01em;}
+
+/* header-row wrap: sits INSIDE the gutter zone, small symmetric side padding */
+.wrap{width:100%; padding:0 var(--nav-pad-r) 0 var(--nav-pad-l);}
+
+/* main-content wrap: sits past the gutter — left padding = gutter + inner pad, right = inner pad only */
+.content{width:100%; padding:0 var(--content-pad-r) 0 var(--content-pad-l);}
+
+/* landing hero wrap: symmetric inset on both sides (mirrors the gutter allowance on the right) */
+.hero-wrap{width:100%; padding:0 var(--hero-pad);}
+
+section, .wrap, .content, .hero-wrap, footer, .empty-state, .note{background-color:var(--paper);}
+
+/* reveal on scroll — only hides content once JS confirms it's ready to animate it back in;
+   without JS (js-enabled class), content stays visible by default */
+.reveal{transition:opacity .6s ease, transform .6s ease;}
+html.js-enabled .reveal{opacity:0; transform:translateY(14px);}
+html.js-enabled .reveal.in{opacity:1; transform:translateY(0);}
+
+/* HEADER / NAV — identical on every page */
+header{
+  position:sticky; top:0; z-index:60;
+  background-color:rgba(255,255,255,0.94);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--hairline);
+}
+/* 3-column grid so navlinks is truly centered on the bar, independent of how wide the
+   wordmark or the icons+lang group are on either side */
+nav{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:16px;
+  padding:clamp(12px,0.9vw,23px) var(--nav-pad-r) clamp(12px,0.9vw,23px) var(--nav-pad-l); position:relative;
+}
+.wordmark{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0; justify-self:start;}
+.navlinks{display:flex; align-items:center; gap:8px; justify-self:center;}
+.navlinks a{
+  font-family:'Inter', sans-serif; font-size:var(--fs-2xs); font-weight:300;
+  padding:0.4em 0.9em; border-radius:3px;
+  transition:background .15s, color .15s;
+}
+.navlinks a:hover, .navlinks a.active{background:var(--tint); color:var(--accent);}
+.navmeta{display:flex; align-items:center; justify-self:end;}
+.navsocial{display:flex; gap:2px;}
+.navsocial a{border:none; padding:6px 10px; display:flex; align-items:center;}
+.navsocial svg{width:15px; height:15px; flex-shrink:0;}
+.navsocial a:hover{color:var(--accent); background:none;}
+.navlang{display:flex; align-items:center; gap:6px; margin-left:14px; font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-sm);}
+.navlang a{color:var(--grey); padding:2px;}
+.navlang a.active{color:var(--ink);}
+.navlang a:hover{color:var(--accent);}
+@media (max-width:640px){ .navlang{display:none;} }
+
+/* PAGE HEAD — plain-text label used at the top of every page's main content */
+.page-head{padding:42px var(--content-pad-r) 0 var(--content-pad-l); font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--ink);}
+.page-head .mono{font-family:'Inter',sans-serif; font-weight:300; letter-spacing:0; font-size:var(--fs-2xs); color:var(--ink);}
+
+/* STATEMENT (used on index + atelier) */
+.statement{padding:28px 0 44px; position:relative;}
+.statement::after{content:""; position:absolute; left:var(--gutter); right:0; bottom:0; height:1px; background:var(--hairline);}
+.statement p{font-family:'Inter',sans-serif; font-size:var(--fs-sm); font-weight:400; max-width:52ch; text-align:justify; hyphens:auto; -webkit-hyphens:auto;}
+.statement p + p{margin-top:1em;}
+.statement.short p{max-width:60ch;}
+
+/* DETAIL DESCRIPTION — project page body copy, justified into a fixed-width column */
+.detail-desc{font-size:var(--fs-sm); max-width:64ch; padding-bottom:44px; text-align:justify; hyphens:auto; -webkit-hyphens:auto;}
+.detail-desc.tight{padding-bottom:8px;}
+
+/* FACTS — single consolidated list (atelier page) */
+.facts{position:relative;}
+.facts::before{content:""; position:absolute; left:var(--gutter); right:0; top:0; height:1px; background:var(--hairline);}
+.facts.no-top-border::before{display:none;}
+.facts .fact{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:14px var(--content-pad-r) 14px var(--content-pad-l);
+  font-size:var(--fs-sm);
+}
+.facts .fact .k{font-weight:300; color:var(--grey);}
+.facts .fact .v{font-family:'Inter',sans-serif; font-weight:700; text-align:right;}
+
+#prace{scroll-margin-top:var(--header-h);}
+
+/* CONTROLS: index label / filters / record count — one row, filters true-centered on the
+   page (an equal-fr grid on either side of the filters keeps them centered regardless of
+   how wide the label or count text is) */
+.controls{background-color:var(--paper); position:relative;}
+.controls::after{content:""; position:absolute; left:var(--gutter); right:0; bottom:0; height:1px; background:var(--hairline);}
+.controlbar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; column-gap:16px; padding-top:8px; padding-bottom:8px;}
+.controlbar > .mono:last-child{justify-self:end; text-align:right;}
+.filters{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; justify-self:center;}
+.filters button{
+  font-family:'Inter', sans-serif; font-size:var(--fs-2xs); font-weight:300;
+  background:none; border:none; cursor:pointer; color:var(--ink);
+  padding:0.4em 0.9em; border-radius:3px;
+  transition:background .15s, color .15s;
+}
+.filters button:hover{background:var(--tint);}
+.filters button.active{background:var(--tint); color:var(--accent);}
+
+/* INDEX LIST */
+.index-list{padding-bottom:10px; background-color:var(--paper);}
+.index-row{
+  display:grid; grid-template-columns:56px 1fr auto auto;
+  gap:20px; align-items:center;
+  padding:22px var(--content-pad-r) 22px var(--content-pad-l);
+  border-bottom:1px solid var(--hairline);
+  background-color:var(--paper);
+  transition:background .18s;
+  cursor:pointer;
+}
+.index-row:hover{background:var(--tint);}
+.index-row .num{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey);}
+.index-row .title{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-lg); letter-spacing:-0.01em; transition:color .18s;}
+.index-row:hover .title{color:var(--accent);}
+.index-row .place{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); white-space:nowrap;}
+.index-row .tag{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--accent); white-space:nowrap; justify-self:end;}
+.index-row.hidden{display:none;}
+.index-detail{
+  max-height:0; overflow:hidden;
+  background-color:var(--tint);
+  transition:max-height .3s ease;
+}
+.index-detail.open{max-height:160px;}
+.index-detail p{
+  padding:18px var(--content-pad-r) 26px var(--content-pad-l);
+  font-size:0.9rem; color:#2a2a2a; max-width:64ch;
+}
+.index-row.open{background:var(--tint);}
+.index-row.open .title{color:var(--accent);}
+.empty-state{padding:60px var(--content-pad-r) 60px var(--content-pad-l); color:var(--grey); font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); display:none;}
+.empty-state.show{display:block;}
+@media (max-width:700px){
+  .index-row{grid-template-columns:32px 1fr; row-gap:6px;}
+  .index-row .place, .index-row .tag{grid-column:2; justify-self:start;}
+}
+
+.cursor-preview{
+  position:fixed; top:0; left:0; z-index:100;
+  width:150px; height:72px; background:var(--ink); color:var(--paper);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs);
+  pointer-events:none; opacity:0; text-align:center; padding:10px;
+  transition:opacity .15s;
+}
+.cursor-preview.show{opacity:1;}
+
+.note{padding:18px var(--content-pad-r) 44px var(--content-pad-l); color:var(--grey); font-size:0.85rem; font-style:italic;}
+
+/* CONTACT — one filled screen: email/phone top-left, instagram dead-centered on the whole
+   section (both axes), company details pinned to the bottom-right corner */
+.contact-fill{position:relative; flex:1 0 auto;}
+.contact-big{position:absolute; top:0; left:0; right:0; display:flex; flex-direction:column; gap:14px;}
+.contact-big a{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-lg); letter-spacing:-0.02em; transition:color .15s;}
+.contact-big a:hover{color:var(--accent);}
+.contact-instagram{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);}
+.contact-address{position:absolute; bottom:0; right:0; left:0; padding-bottom:var(--content-pad-r); text-align:right;}
+.contact-address div{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); padding:2px 0;}
+.contact-address div:first-child{color:var(--ink); font-weight:700; font-size:var(--fs-sm);}
+footer{
+  margin-top:auto;
+  border-top:1px solid var(--hairline);
+  padding:18px var(--content-pad-r) 18px var(--content-pad-l);
+  display:flex; justify-content:center; color:var(--grey);
+  font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs);
+  position:relative; z-index:55; background-color:var(--paper);
+}
+
+/* scroll progress indicator — thin line centered in the gutter, confined to the area below
+   the header (never crosses over it), growing from 0 as the page scrolls. The small square
+   thumb rides the bottom tip of the fill — it's the moving scroll handle, not a static dot. */
+.scroll-indicator{
+  position:fixed;
+  top:calc(var(--header-h) + var(--marker-gap)); bottom:calc(var(--footer-h) + var(--marker-gap-bottom));
+  left:calc(var(--gutter) / 2); width:2px;
+  transform:translateX(-50%);
+  z-index:50; pointer-events:none;
+}
+.scroll-indicator-fill{
+  position:absolute; top:0; left:0; width:100%; height:0%;
+  background:var(--accent); transition:height .05s linear;
+}
+/* the square sits just past the fill's current tip (never straddling it), exactly like the
+   PDF's marker — fully clear of the header at rest, and fully clear of the footer at 100% */
+.scroll-thumb{
+  position:absolute; bottom:0; left:50%; transform:translate(-50%,100%);
+  width:clamp(6px,0.586vw,15px); height:clamp(6px,0.586vw,15px); background:var(--accent);
+}
+@media (max-width:640px){ .scroll-indicator{display:none;} }
+
+/* persistent left gutter rule — grey vertical line at the exact x measured in the PDF,
+   runs the full height of the viewport on every page; never sits under text, since all
+   text content starts past --content-pad-l (which already includes the gutter width) */
+body::before{
+  content:""; position:fixed; top:0; bottom:var(--footer-h);
+  left:var(--gutter); width:1px;
+  background:var(--hairline); z-index:1; pointer-events:none;
+}
+@media (max-width:640px){ body::before{display:none;} }
+
+/* wordmark as home link */
+.wordmark{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0; display:inline-block;}
+a.wordmark:hover{color:var(--accent);}
+
+/* LANDING — homepage hero: giant ORDUM wordmark split into two hover halves
+   (ORD → ordo / UM → stratum), matching the studio's own name etymology.
+   Sized to exactly fill the viewport below the header (JS measures the header's real height
+   into --header-h, so this is pixel-exact, not guessed) — nothing below can peek into view
+   until you scroll. The header stays a normal sticky element outside this section, so it
+   keeps sticking all the way down the rest of the page. */
+.landing{
+  position:relative; border-bottom:1px solid var(--hairline);
+  min-height:calc(100svh - var(--header-h));
+  display:flex; flex-direction:column;
+}
+/* the hero block (letters/rule/caption) is vertically centered in the space above the
+   bottom statement bar — margin:auto on this item alone absorbs all the leftover height,
+   split evenly above/below it, while landing-bottom (no auto margin) stays pinned flush
+   to the section's own bottom edge */
+.landing-hero-wrap{margin-top:auto; margin-bottom:auto; padding-top:24px; padding-bottom:24px;}
+/* one shared grid for all three rows (letters / rule / caption) so the vertical divider
+   is a single continuous column boundary — never two independently-positioned borders
+   that could drift out of alignment with each other */
+.landing-grid{
+  display:grid; grid-template-columns:max-content max-content; column-gap:0; row-gap:0;
+  justify-items:stretch;
+}
+.landing-letters{
+  grid-row:1;
+  font-family:'Inter',sans-serif; font-weight:800;
+  font-size:var(--fs-hero); line-height:0.86; letter-spacing:-0.03em;
+  color:var(--ink); transition:color .35s ease; white-space:nowrap; cursor:default;
+}
+.half-a{grid-column:1;}
+.half-b{grid-column:2;}
+.landing-rule{display:none;}
+.landing-cap{grid-row:3; padding-top:26px; display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; color:var(--ink); transition:color .35s ease; cursor:default; box-sizing:border-box;}
+.cap-a{grid-column:1;}
+.cap-b{grid-column:2;}
+.cap-term{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0;}
+.cap-gloss{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); letter-spacing:0; opacity:0; transition:opacity .3s; white-space:nowrap;}
+
+.landing:has(.half-a:hover) .half-a, .landing:has(.cap-a:hover) .half-a{color:var(--accent);}
+.landing:has(.half-a:hover) .half-b, .landing:has(.cap-a:hover) .half-b{color:var(--dim);}
+.landing:has(.half-a:hover) .cap-a, .landing:has(.cap-a:hover) .cap-a{color:var(--accent);}
+.landing:has(.half-a:hover) .cap-a .cap-gloss, .landing:has(.cap-a:hover) .cap-a .cap-gloss{opacity:1;}
+.landing:has(.half-a:hover) .cap-b, .landing:has(.cap-a:hover) .cap-b{color:var(--dim);}
+
+.landing:has(.half-b:hover) .half-b, .landing:has(.cap-b:hover) .half-b{color:var(--accent);}
+.landing:has(.half-b:hover) .half-a, .landing:has(.cap-b:hover) .half-a{color:var(--dim);}
+.landing:has(.half-b:hover) .cap-b, .landing:has(.cap-b:hover) .cap-b{color:var(--accent);}
+.landing:has(.half-b:hover) .cap-b .cap-gloss, .landing:has(.cap-b:hover) .cap-b .cap-gloss{opacity:1;}
+.landing:has(.half-b:hover) .cap-a, .landing:has(.cap-b:hover) .cap-a{color:var(--dim);}
+
+@media (hover:none){
+  .landing.tap-a .half-a, .landing.tap-a .cap-a{color:var(--accent);}
+  .landing.tap-a .half-b, .landing.tap-a .cap-b{color:var(--dim);}
+  .landing.tap-a .cap-a .cap-gloss{opacity:1;}
+  .landing.tap-b .half-b, .landing.tap-b .cap-b{color:var(--accent);}
+  .landing.tap-b .half-a, .landing.tap-b .cap-a{color:var(--dim);}
+  .landing.tap-b .cap-b .cap-gloss{opacity:1;}
+}
+
+/* rotated vertical label in the gutter — matches its exact position/orientation in the PDF
+   (centered in the gutter column, reading bottom-to-top, ~80% down the hero) */
+.landing-est{
+  position:absolute; left:calc(var(--gutter) / 2); top:80%;
+  transform:translate(-50%,-50%) rotate(-90deg);
+  font-family:'Inter',sans-serif; font-weight:400; font-size:var(--fs-2xs); color:var(--grey);
+  white-space:nowrap;
+}
+.landing-bottom{
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  padding-top:26px; padding-bottom:32px; border-top:1px solid var(--hairline);
+}
+.landing-bottom p{max-width:52ch; font-size:var(--fs-sm); font-weight:400;}
+.landing-arrow{display:flex; flex-direction:column; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); flex-shrink:0;}
+.landing-arrow svg{animation:bob 1.8s ease-in-out infinite;}
+.landing-arrow:hover{color:var(--accent);}
+@media (prefers-reduced-motion: reduce){ .landing-arrow svg{animation:none;} }
+@keyframes bob{0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);}}
+@media (max-width:700px){
+  .landing-cap{flex-direction:column; align-items:flex-start; gap:2px;}
+  .landing-est{display:none;}
+}
+
+/* KONTEXT → KONCEPT → TRANSFORMÁCIA → PORIADOK flow chain (ateliér) */
+.statement-row{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:center;}
+.flow{display:flex; align-items:center; gap:12px; flex-wrap:wrap; justify-content:flex-end;}
+.flow span{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0;}
+.flow .arrow{color:var(--grey); font-weight:400;}
+@media (max-width:900px){ .statement-row{grid-template-columns:1fr;} .flow{justify-content:flex-start;} }
+
+/* ACCENT BUTTON — filled call-to-action, à la homepage "o ateliéri" */
+.btn-accent{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-sm);
+  padding:0.4em 2.8em; background:var(--accent); color:var(--paper);
+  transition:opacity .15s;
+}
+.btn-accent:hover{opacity:0.85;}
+@media (max-width:640px){
+  .equation .gloss{white-space:normal;}
+}
+
+
+/* PROJECT GRID — true masonry, à la fala atelier / arrhov+frick: each image keeps its
+   native aspect ratio (no cropping, no stretching), columns flow to a natural height */
+.proj-grid{
+  column-count:3; column-gap:22px;
+  background:var(--paper);
+  padding:32px var(--content-pad-r) 32px var(--content-pad-l);
+}
+@media (max-width:900px){ .proj-grid{column-count:2;} }
+@media (max-width:560px){ .proj-grid{column-count:1;} }
+
+.proj-card{
+  display:block; break-inside:avoid; -webkit-column-break-inside:avoid;
+  margin-bottom:38px; background:var(--paper); text-decoration:none; color:var(--ink);
+}
+.proj-card.hidden{display:none;}
+
+.proj-thumb{position:relative; overflow:hidden; background:var(--paper);}
+.proj-thumb img{width:100%; height:auto; display:block;}
+
+/* hover overlay — image tints accent-blue (multiply) and its meta surfaces on top,
+   in place of a permanent caption under every thumbnail */
+.thumb-tint{position:absolute; inset:0; background:var(--accent); opacity:0; transition:opacity .25s;}
+.thumb-info{
+  position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end;
+  padding:22px; opacity:0; transition:opacity .25s; color:var(--paper);
+}
+.thumb-info .num{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); opacity:0.85;}
+.thumb-info .ptitle{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0; margin-top:6px;}
+.thumb-info .place{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); margin-top:4px; opacity:0.85;}
+.thumb-info .ptag{font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs); margin-top:2px; opacity:0.85;}
+.proj-card:hover .thumb-tint, .proj-card:hover .thumb-info{opacity:1;}
+
+
+/* PROJECT DETAIL page — big thumbnail beside the text on desktop */
+.back-link{display:inline-flex; align-items:center; gap:8px; margin:20px 0 0; font-family:'Inter',sans-serif; font-weight:300; font-size:var(--fs-2xs);}
+.back-link:hover{color:var(--accent);}
+.detail-head-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; padding-top:22px;}
+.detail-thumb{overflow:hidden; background:var(--tint);}
+.detail-thumb img{width:100%; height:auto; display:block;}
+.detail-meta{display:flex; flex-wrap:wrap; gap:28px; padding-top:24px; padding-bottom:24px; margin-bottom:24px;}
+.detail-meta div{font-family:'Inter',sans-serif; font-size:var(--fs-2xs); font-weight:700;}
+.detail-meta .k{color:var(--grey); display:block; margin-bottom:4px; font-weight:300;}
+@media (max-width:900px){
+  .detail-head-grid{grid-template-columns:1fr; gap:28px;}
+  .detail-thumb{order:-1;}
+}
+
+/* PROJECT GALLERY — masonry, generous white space ("mäso"), images keep their own composition
+   (no crop) unless a size is explicitly forced */
+.gallery{column-count:2; column-gap:clamp(24px,4vw,48px); padding:8px 0 12px;}
+.gallery a{display:block; break-inside:avoid; margin-bottom:clamp(24px,4vw,48px); overflow:hidden; background:var(--tint);}
+.gallery img{width:100%; height:auto; display:block; transition:transform .5s ease;}
+.gallery a:hover img{transform:scale(1.035);}
+.gallery a.wide{column-span:all;}
+.gallery .cap{display:block; font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); margin-top:10px;}
+@media (max-width:700px){ .gallery{column-count:1;} }
+
+/* SKETCH strip — hand drawing on its own, extra breathing room, distinct from render gallery */
+.sketch-block{padding:clamp(28px,5vw,56px) 0;}
+.sketch-block a{display:block; overflow:hidden; background:var(--paper);}
+.sketch-block img{width:100%; height:auto; display:block; transition:transform .5s ease;}
+.sketch-block a:hover img{transform:scale(1.035);}
+.sketch-block .cap{display:block; font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); margin-top:14px;}
+
+/* content-area hairlines start at the gutter, not the page edge — content is nested one level
+   inside .content's own padding, so the pseudo-element has to counter that padding to reach
+   the true gutter position on the left and the true page edge on the right.
+   Only one element per section-boundary draws the line (never both neighbours), matching the
+   PDF exactly: .statement's own bottom edge covers the line before .principles/.detail-meta,
+   .skills/.photo-section supply their own top edge. .drawings/.project-nav/.detail-meta on
+   project pages carry NO divider at all — the PDF shows none there. */
+.photo-section, .skills{position:relative;}
+.photo-section::before, .skills::before{
+  content:""; position:absolute; top:0;
+  left:calc(-1 * var(--content-pad-l) + var(--gutter)); right:calc(-1 * var(--content-pad-r));
+  height:1px; background:var(--hairline);
+}
+
+/* PHOTO GRID — hobby/personal photography, same loose masonry as the project index, no card meta */
+.photo-section{padding:clamp(36px,6vw,56px) 0 64px;}
+.photo-grid{column-count:3; column-gap:clamp(28px,4.5vw,56px); padding:8px 0 12px;}
+@media (max-width:900px){ .photo-grid{column-count:2;} }
+@media (max-width:560px){ .photo-grid{column-count:1;} }
+.photo-grid a{display:block; break-inside:avoid; margin-bottom:clamp(28px,4.5vw,56px); overflow:hidden;}
+.photo-grid a:nth-child(4n+1){margin-top:clamp(44px,6vw,84px);}
+.photo-grid a:nth-child(4n+2){margin-top:clamp(10px,1.8vw,22px);}
+.photo-grid a:nth-child(4n+3){margin-top:clamp(32px,5vw,64px);}
+.photo-grid a:nth-child(7n+4){margin-top:clamp(16px,2.5vw,32px);}
+.photo-grid a:nth-child(5n+2){margin-top:clamp(56px,7vw,96px);}
+.photo-grid img{width:100%; height:auto; display:block; transition:transform .5s ease;}
+.photo-grid a:hover img{transform:scale(1.035);}
+
+/* LIGHTBOX — unified full-screen viewer for gallery / drawings / photo-grid images,
+   browsable with prev/next so a visitor never has to return to the page to see the next image */
+.lightbox{
+  position:fixed; inset:0; z-index:200; background:rgba(255,255,255,0.97);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transition:opacity .25s ease;
+}
+.lightbox.open{opacity:1; visibility:visible;}
+.lightbox .lb-img{
+  max-width:88vw; max-height:82vh; object-fit:contain; display:block;
+  transform:scale(0.94); transition:transform .3s cubic-bezier(.16,.8,.3,1);
+}
+.lightbox.open .lb-img{transform:scale(1);}
+@media (prefers-reduced-motion: reduce){
+  .lightbox .lb-img{transition:none;}
+}
+.lightbox .lb-close, .lightbox .lb-prev, .lightbox .lb-next{
+  position:absolute; background:none; border:none; color:var(--ink); cursor:pointer;
+  transition:opacity .15s; opacity:0.85;
+}
+.lightbox .lb-close:hover, .lightbox .lb-prev:hover, .lightbox .lb-next:hover{opacity:1;}
+.lightbox .lb-close{top:18px; right:20px; font-size:1.3rem; padding:10px;}
+.lightbox .lb-prev, .lightbox .lb-next{top:50%; transform:translateY(-50%); font-size:1.8rem; padding:14px 18px;}
+.lightbox .lb-prev{left:4px;}
+.lightbox .lb-next{right:4px;}
+.lightbox .lb-caption{
+  position:absolute; bottom:22px; left:0; right:0; text-align:center;
+  font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey);
+  padding:0 64px;
+}
+@media (max-width:640px){
+  .lightbox .lb-prev, .lightbox .lb-next{font-size:1.3rem; padding:10px 12px;}
+  .lightbox .lb-caption{font-size:0.68rem; padding:0 48px;}
+}
+
+/* shared section label — light eyebrow, used above drawings/skills/principles/photo-grid */
+.section-label{font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); display:block; margin-bottom:32px;}
+
+/* DRAWINGS — technical set, one per row, generous vertical rhythm */
+.drawings{margin-top:16px; padding:clamp(36px,6vw,56px) 0 64px;}
+.drawing-item{margin-bottom:clamp(32px,5vw,52px);}
+.drawing-item:last-child{margin-bottom:0;}
+.drawing-item a{display:block; overflow:hidden; border:1px solid var(--hairline);}
+.drawing-item img{width:100%; height:auto; display:block; background:#fff; transition:transform .5s ease;}
+.drawing-item a:hover img{transform:scale(1.035);}
+.drawing-item .dcap{font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs); color:var(--grey); margin-top:12px;}
+
+/* SKILLS — percentage sliders, same accent-blue flat fill as the scroll indicator, no gradients/per-item color */
+.skills{padding:clamp(36px,6vw,56px) 0 64px;}
+.skill-row{display:grid; grid-template-columns:minmax(120px,180px) 1fr 48px; align-items:center; column-gap:20px; padding:11px 0;}
+.skill-name{font-family:'Inter', sans-serif; font-weight:400; font-size:var(--fs-sm);}
+.skill-track{position:relative; height:1px; background:rgba(0,17,255,0.25);}
+.skill-fill{position:absolute; top:0; left:0; height:100%; width:0; background:var(--accent); transition:width 1.1s cubic-bezier(.16,.8,.3,1);}
+/* square handle at the fill's end, same visual language as the scroll-bar thumb */
+.skill-fill::after{
+  content:""; position:absolute; top:50%; right:0; transform:translate(50%,-50%);
+  width:clamp(6px,0.586vw,15px); height:clamp(6px,0.586vw,15px); background:var(--accent);
+}
+.skill-pct{font-family:'Inter', sans-serif; font-weight:400; font-size:var(--fs-sm); color:var(--grey); text-align:right;}
+@media (max-width:560px){
+  .skill-row{grid-template-columns:100px 1fr 40px; column-gap:12px;}
+}
+
+/* PRINCIPLES — atelier philosophy/manifesto, staggered two-column rhythm */
+.principles{padding:clamp(36px,6vw,56px) 0 8px;}
+.principles-grid{display:grid; grid-template-columns:1fr 1fr; column-gap:56px;}
+.principles-col-b{padding-top:clamp(60px,9vw,120px);}
+.principle{display:grid; grid-template-columns:56px 1fr; gap:20px; padding-bottom:clamp(36px,6vw,64px);}
+.principle .pnum{font-family:'Inter', sans-serif; font-weight:700; font-size:var(--fs-sm); color:var(--ink); letter-spacing:0;}
+.principle h3{font-family:'Inter',sans-serif; font-weight:700; font-size:var(--fs-sm); letter-spacing:0; margin-bottom:8px;}
+.principle p{font-size:var(--fs-sm); font-weight:400; color:#2a2a2a; max-width:62ch; text-align:justify; hyphens:auto; -webkit-hyphens:auto;}
+@media (max-width:820px){
+  .principles-grid{grid-template-columns:1fr;}
+  .principles-col-b{padding-top:0;}
+}
+@media (max-width:640px){
+  .principle{grid-template-columns:1fr; gap:6px;}
+}
+
+/* PROJECT NAV — prev/next + back-to-index footer strip on detail pages (no divider — the
+   PDF shows none on project pages, just whitespace) */
+.project-nav{
+  padding:22px var(--content-pad-r) 22px var(--content-pad-l);
+  display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+  font-family:'Inter', sans-serif; font-weight:300; font-size:var(--fs-2xs);
+}
+.project-nav a:hover{color:var(--accent);}
+.project-nav .pn-index{color:var(--grey);}
+.project-nav .pn-next{text-align:right;}
+@media (max-width:640px){ .project-nav{justify-content:center; text-align:center;} .project-nav .pn-next{text-align:center;} }

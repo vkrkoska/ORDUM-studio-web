@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORDUM studio</title>
+<meta name="color-scheme" content="light only">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=21">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="wordmark">ORDUM</a>
+    <div class="navlinks">
+        <a href="index.html#prace" id="navPrace">práce</a>
+        <a href="atelier.html">ateliér</a>
+        <a href="kontakt.html">kontakt</a>
+    </div>
+    <div class="navmeta">
+      <div class="navsocial">
+        <a href="mailto:ahoj@ordum.sk" aria-label="Email" title="Email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="1"/><path d="M2 6l10 7 10-7"/></svg>
+        </a>
+        <a href="https://instagram.com/ordum.studio" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+      </div>
+      <div class="navlang"><a href="#" class="lang active">SK</a><a href="#" class="lang">EN</a></div>
+    </div>
+  </nav>
+</header>
+
+<section class="landing">
+  <div class="hero-wrap landing-hero-wrap">
+    <div class="landing-grid">
+      <span class="landing-letters half-a">ORD</span><span class="landing-letters half-b">UM</span>
+      <span class="landing-rule rule-a" aria-hidden="true"></span><span class="landing-rule rule-b" aria-hidden="true"></span>
+      <div class="landing-cap cap-a">
+        <span class="cap-term">ORDO</span><span class="cap-gloss">poriadok, usporiadanie</span>
+      </div>
+      <div class="landing-cap cap-b">
+        <span class="cap-term">STRATUM</span><span class="cap-gloss">vrstva, čítanie v čase</span>
+      </div>
+    </div>
+  </div>
+
+  <span class="landing-est">est. 2026</span>
+
+  <div class="hero-wrap landing-bottom">
+    <p>Kontextuálna, vrstvená architektúra. Pracujeme s existujúcim — s miestom, jeho históriou a materiálom — namiesto toho, aby sme ho prekryli.</p>
+    <a href="#prace" class="landing-arrow">
+      <span>Projekty</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+    </a>
+  </div>
+</section>
+
+<div id="prace"></div>
+
+<div class="controls">
+  <div class="content controlbar">
+    <span class="mono grey">index prác</span>
+    <div class="filters" id="filters">
+      <button class="active" data-filter="all">všetko</button>
+      <button data-filter="verejne">verejné</button>
+      <button data-filter="revitalizacia">revitalizácia</button>
+      <button data-filter="skola">škola</button>
+      <button data-filter="kultura">kultúra</button>
+    </div>
+    <span class="mono grey" id="rowcount">7 záznamov</span>
+  </div>
+</div>
+
+<div class="proj-grid" id="list">
+
+    <a href="project-0001.html" class="proj-card" data-cat="verejne" data-search="vyhliadka vinárstvo pezinok">
+      <div class="proj-thumb">
+        <img src="images/vinarstvo-thumbnail.jpg" alt="Vyhliadka a vinárstvo, Pezinok — fyzický model, pohľad a rez">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0001</span>
+          <span class="ptitle">Vyhliadka a vinárstvo</span>
+          <span class="place">Pezinok, bakalárska práca</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0003.html" class="proj-card" data-cat="skola" data-search="gymnázium metodova bratislava xella">
+      <div class="proj-thumb">
+        <img src="images/gymnazium2-thumbnail.jpg" alt="Gymnázium Metodova, Bratislava — fyzický model">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0003</span>
+          <span class="ptitle">Gymnázium Metodova</span>
+          <span class="place">Bratislava, súťaž XELLA</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0002.html" class="proj-card" data-cat="revitalizacia" data-search="big box preservation bratislava obi baumax">
+      <div class="proj-thumb">
+        <img src="images/bigbox-model.jpg" alt="Big Box Preservation, Bratislava — fyzický model">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0002</span>
+          <span class="ptitle">Big Box Preservation</span>
+          <span class="place">Bratislava, vertikálny ateliér</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0004.html" class="proj-card" data-cat="kultura" data-search="dom kultúry ružinov bratislava">
+      <div class="proj-thumb">
+        <img src="images/ruzinov2-thumbnail.jpg" alt="Dom kultúry Ružinov, Bratislava — fyzický model">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0004</span>
+          <span class="ptitle">Dom kultúry Ružinov</span>
+          <span class="place">Bratislava, diplomová práca</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0005.html" class="proj-card" data-cat="revitalizacia" data-search="karlovešká knižnica interiér bratislava karlova ves">
+      <div class="proj-thumb">
+        <img src="images/kniznica-thumbnail.jpg" alt="Karloveská knižnica — axonometrický rez interiérom">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0005</span>
+          <span class="ptitle">Karloveská knižnica</span>
+          <span class="place">Bratislava, Karlova Ves — interiér</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0006.html" class="proj-card" data-cat="revitalizacia" data-search="od dunaj dom odievania bratislava námestie snp bahno">
+      <div class="proj-thumb">
+        <img src="images/oddunaj-thumbnail.jpg" alt="OD Dunaj — fyzický model severnej fasády">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0006</span>
+          <span class="ptitle">OD Dunaj</span>
+          <span class="place">Bratislava, Námestie SNP</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="project-0007.html" class="proj-card" data-cat="revitalizacia" data-search="lodná hala zimný prístav bratislava apollo">
+      <div class="proj-thumb">
+        <img src="images/lodnahala-thumbnail.jpg" alt="Lodná hala, Zimný prístav — verejné priestranstvo pred halou">
+        <div class="thumb-tint"></div>
+        <div class="thumb-info">
+          <span class="num">0007</span>
+          <span class="ptitle">Lodná hala</span>
+          <span class="place">Bratislava, Zimný prístav</span>
+          <span class="ptag">školský projekt</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+<div class="empty-state" id="emptyState">Žiadne záznamy nezodpovedajú filtru.</div>
+<p class="note">Zobrazené sú doterajšie študijné a súťažné projekty — modely, skice aj vizualizácie. Portfólio sa priebežne dopĺňa o realizácie.</p>
+
+<footer>
+  <span>© 2026 ORDUM studio, s.r.o.</span>
+</footer>
+
+<script src="script.js?v=11"></script>
+</body>
+</html>
