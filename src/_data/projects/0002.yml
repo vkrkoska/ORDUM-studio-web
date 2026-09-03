@@ -1,5 +1,3 @@
----
-permalink: false
 order: 3
 number: "0002"
 category: revitalizacia
@@ -59,4 +57,3 @@ gallery:
   - image: /images/bigbox-model.jpg
     wide: false
     alt: { sk: "Fyzický model transformácie", en: "Physical model of the transformation" }
----

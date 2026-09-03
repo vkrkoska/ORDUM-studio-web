@@ -16,13 +16,13 @@
 
 <div class="proj-grid" id="list">
 {% for p in collections.projects %}
-{% set L = p.data[lang] %}
-    <a href="{% if lang == 'en' %}/en/project-{{ p.data.number }}.html{% else %}/project-{{ p.data.number }}.html{% endif %}" class="proj-card" data-cat="{{ p.data.category }}" data-search="{{ L.search }}">
+{% set L = p[lang] %}
+    <a href="{% if lang == 'en' %}/en/project-{{ p.number }}.html{% else %}/project-{{ p.number }}.html{% endif %}" class="proj-card" data-cat="{{ p.category }}" data-search="{{ L.search }}">
       <div class="proj-thumb">
-        <img src="{{ p.data.thumbnail.image }}" alt="{{ p.data.thumbnail.alt[lang] }}">
+        <img src="{{ p.thumbnail.image }}" alt="{{ p.thumbnail.alt[lang] }}">
         <div class="thumb-tint"></div>
         <div class="thumb-info">
-          <span class="num">{{ p.data.number }}</span>
+          <span class="num">{{ p.number }}</span>
           <span class="ptitle">{{ L.title }}</span>
           <span class="place">{{ L.place }}</span>
           <span class="ptag">{{ L.tag }}</span>

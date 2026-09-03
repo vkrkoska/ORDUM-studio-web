@@ -1,5 +1,3 @@
----
-permalink: false
 order: 4
 number: "0004"
 category: kultura
@@ -102,4 +100,3 @@ drawings:
   - image: /images/ruzinov2-detail-material.jpg
     alt: { sk: "Materiálový rez lávkou a fasádou strešnej krajiny", en: "Material section through the walkway and roof-landscape façade" }
     caption: { sk: "Detail — materiálový rez lávkou a fasádou", en: "Detail — material section through walkway and façade" }
----

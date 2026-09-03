@@ -1,0 +1,291 @@
+backend:
+  name: github
+  repo: OWNER/REPO # TODO: nahradiť po vytvorení GitHub repozitára, napr. vikoso-krko/ordum-studio-web
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+local_backend: true
+
+media_folder: src/images
+public_folder: /images
+
+publish_mode: simple
+
+collections:
+  - name: projects
+    label: Projekty
+    label_singular: Projekt
+    folder: src/_data/projects
+    extension: yml
+    format: yml
+    create: true
+    delete: true
+    slug: "{{fields.number}}"
+    identifier_field: number
+    summary: "{{number}} — {{sk.title}}"
+    sortable_fields: ["order", "number"]
+    fields:
+      - label: Poradie v galérii
+        name: order
+        widget: number
+        valueType: int
+        hint: "Určuje poradie karty v galérii na hlavnej stránke — nesúvisí s číslom projektu nižšie."
+      - label: Číslo projektu
+        name: number
+        widget: string
+        pattern: ['^\d{4}$', "Presne 4 číslice, napr. 0008"]
+        hint: "Používa sa v URL adrese (napr. project-0008.html) a v číselnom štítku na stránke. Musí byť unikátne."
+      - label: Kategória
+        name: category
+        widget: select
+        options:
+          - { label: "Verejné", value: verejne }
+          - { label: "Revitalizácia", value: revitalizacia }
+          - { label: "Škola", value: skola }
+          - { label: "Kultúra", value: kultura }
+      - label: Titulok v záložke prehliadača
+        name: page_title
+        widget: object
+        hint: "Text zobrazený v záložke prehliadača a vo výsledkoch vyhľadávania, napr. „Názov projektu, Mesto“."
+        fields:
+          - { label: Slovensky, name: sk, widget: string }
+          - { label: Anglicky, name: en, widget: string }
+      - label: Užší text pod nadpisom
+        name: desc_tight
+        widget: boolean
+        default: false
+        required: false
+        hint: "Technický detail dizajnu — necháva zapnuté/vypnuté podľa potreby, zvyčajne nemeniť."
+      - label: Obsah — slovensky
+        name: sk
+        widget: object
+        collapsed: true
+        fields:
+          - { label: Názov projektu, name: title, widget: string }
+          - { label: "Miesto (pod názvom v galérii)", name: place, widget: string, hint: "Napr. „Bratislava, diplomová práca“." }
+          - { label: Štítok, name: tag, widget: string, default: "školský projekt" }
+          - { label: Vyhľadávacie kľúčové slová, name: search, widget: string, hint: "Slová oddelené medzerou, malými písmenami — používa sa pri vyhľadávaní v galérii." }
+      - label: Obsah — anglicky
+        name: en
+        widget: object
+        collapsed: true
+        fields:
+          - { label: Project title, name: title, widget: string }
+          - { label: Place (under title in gallery), name: place, widget: string }
+          - { label: Tag, name: tag, widget: string, default: "school project" }
+          - { label: Search keywords, name: search, widget: string }
+      - label: Náhľadový obrázok (galéria na hlavnej stránke)
+        name: thumbnail
+        widget: object
+        fields:
+          - { label: Obrázok, name: image, widget: image }
+          - label: Alt text
+            name: alt
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+      - label: Hero obrázok (na stránke projektu)
+        name: hero
+        widget: object
+        fields:
+          - { label: Obrázok, name: image, widget: image }
+          - label: Alt text
+            name: alt
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+      - label: Metadáta (riadky pod nadpisom)
+        name: meta_rows
+        widget: list
+        min: 2
+        max: 6
+        summary: "{{label.sk}}: {{value.sk}}"
+        hint: "Napr. Miesto / Stupeň / Typ / Vedúci práce. Počet aj popisky riadkov sú voľné, líšia sa projekt od projektu."
+        fields:
+          - label: Popisok
+            name: label
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+          - label: Hodnota
+            name: value
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+      - label: Text projektu
+        name: body
+        widget: object
+        hint: "Presne 3 odseky, v oboch jazykoch."
+        fields:
+          - label: Slovensky
+            name: sk
+            widget: list
+            min: 3
+            max: 3
+            field: { label: Odsek, name: paragraph, widget: text }
+          - label: Anglicky
+            name: en
+            widget: list
+            min: 3
+            max: 3
+            field: { label: Paragraph, name: paragraph, widget: text }
+      - label: Skica (voliteľné)
+        name: sketch_block
+        widget: object
+        required: false
+        fields:
+          - { label: Obrázok, name: image, widget: image }
+          - label: Popis
+            name: caption
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+      - label: Galéria
+        name: gallery
+        widget: list
+        min: 3
+        max: 14
+        summary: "{{image}}"
+        fields:
+          - { label: Obrázok, name: image, widget: image }
+          - { label: "Široký (na šírku 2 stĺpcov)", name: wide, widget: boolean, default: false }
+          - label: Alt text (zobrazí sa aj ako popis v prehliadači obrázkov)
+            name: alt
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+      - label: Výkresy (voliteľné)
+        name: drawings
+        widget: list
+        required: false
+        max: 6
+        summary: "{{caption.sk}}"
+        fields:
+          - { label: Obrázok, name: image, widget: image }
+          - label: Alt text
+            name: alt
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+          - label: Popis
+            name: caption
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: string }
+              - { label: Anglicky, name: en, widget: string }
+
+  - name: pages
+    label: Texty stránok
+    files:
+      - name: atelier
+        label: Ateliér
+        file: src/_data/pages/atelier.yml
+        fields:
+          - label: Úvodné odseky
+            name: intro
+            widget: object
+            hint: "Podporuje <b>tučné</b> a <em>kurzívu</em> pomocou HTML značiek."
+            fields:
+              - { label: Slovensky, name: sk, widget: list, field: { label: Odsek, name: paragraph, widget: text } }
+              - { label: Anglicky, name: en, widget: list, field: { label: Paragraph, name: paragraph, widget: text } }
+          - label: "Reťazec kontext → koncept → transformácia → poriadok"
+            name: flow
+            widget: object
+            fields:
+              - { label: Slovensky (4 slová), name: sk, widget: list, field: { label: Slovo, name: word, widget: string } }
+              - { label: Anglicky (4 slová), name: en, widget: list, field: { label: Word, name: word, widget: string } }
+          - label: Princípy tvorby
+            name: principles
+            widget: list
+            summary: "{{title.sk}}"
+            fields:
+              - { label: Číslo, name: num, widget: string }
+              - label: Nadpis
+                name: title
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+              - label: Text
+                name: body
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: text }
+                  - { label: Anglicky, name: en, widget: text }
+          - label: Fakty (Založené / Zakladateľ / Právna forma / Status)
+            name: facts
+            widget: list
+            summary: "{{k.sk}}: {{v.sk}}"
+            fields:
+              - label: Popisok
+                name: k
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+              - label: Hodnota
+                name: v
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+
+      - name: viktor-krkoska
+        label: Zakladateľ (bio)
+        file: "src/_data/pages/viktor-krkoska.yml"
+        fields:
+          - label: Životopis
+            name: bio
+            widget: object
+            fields:
+              - { label: Slovensky, name: sk, widget: text }
+              - { label: Anglicky, name: en, widget: text }
+          - label: Fakty (vzdelanie / prax / jazyky)
+            name: facts
+            widget: list
+            summary: "{{k.sk}}: {{v.sk}}"
+            fields:
+              - label: Popisok
+                name: k
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+              - label: Hodnota
+                name: v
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+          - label: Zručnosti
+            name: skills
+            widget: list
+            summary: "{{name.sk}} — {{pct}}%"
+            fields:
+              - label: Názov
+                name: name
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }
+              - { label: "Percento (0–100)", name: pct, widget: number, valueType: int, min: 0, max: 100 }
+          - label: Fotografie (hobby)
+            name: photos
+            widget: list
+            summary: "{{alt.sk}}"
+            fields:
+              - { label: Obrázok, name: image, widget: image }
+              - label: Alt text
+                name: alt
+                widget: object
+                fields:
+                  - { label: Slovensky, name: sk, widget: string }
+                  - { label: Anglicky, name: en, widget: string }

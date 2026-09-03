@@ -1,5 +1,3 @@
----
-permalink: false
 order: 7
 number: "0007"
 category: revitalizacia
@@ -71,4 +69,3 @@ drawings:
   - image: /images/lodnahala-section-a.jpg
     alt: { sk: "Rez A lodnou halou", en: "Section A through the ship hall" }
     caption: { sk: "Rez A", en: "Section A" }
----

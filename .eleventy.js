@@ -1,4 +1,14 @@
+const fs = require("fs");
+const path = require("path");
 const yaml = require("js-yaml");
+
+function loadProjects() {
+  const dir = path.join(__dirname, "src/_data/projects");
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".yml"))
+    .map((f) => yaml.load(fs.readFileSync(path.join(dir, f), "utf8")));
+}
 
 module.exports = function (eleventyConfig) {
   eleventyConfig.addDataExtension("yml", (contents) => yaml.load(contents));
@@ -10,17 +20,14 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/prace.html": "prace.html" });
   eleventyConfig.ignores.add("src/prace.html");
 
-  eleventyConfig.addCollection("projects", (api) =>
-    api.getFilteredByGlob("src/projects/*.md").sort((a, b) => a.data.order - b.data.order)
+  eleventyConfig.addCollection("projects", () =>
+    loadProjects().sort((a, b) => a.order - b.order)
   );
 
-  eleventyConfig.addCollection("projectPages", (api) => {
+  eleventyConfig.addCollection("projectPages", () => {
     // prev/next navigation follows the fixed project number sequence (0001→0002→…→circular),
     // independent of the curated gallery display `order`
-    const byNumber = api
-      .getFilteredByGlob("src/projects/*.md")
-      .sort((a, b) => a.data.number.localeCompare(b.data.number))
-      .map((p) => p.data);
+    const byNumber = loadProjects().sort((a, b) => a.number.localeCompare(b.number));
     const pages = [];
     for (const locale of ["sk", "en"]) {
       byNumber.forEach((project, i) => {

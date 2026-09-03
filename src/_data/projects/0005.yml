@@ -1,5 +1,3 @@
----
-permalink: false
 order: 5
 number: "0005"
 category: revitalizacia
@@ -63,4 +61,3 @@ drawings:
   - image: /images/kniznica-floorplan.jpg
     alt: { sk: "Pôdorys interiéru s legendou funkčných celkov a materiálovou špecifikáciou", en: "Interior floor plan with a legend of functional zones and material specification" }
     caption: { sk: "Pôdorys — funkčné členenie a materiálová špecifikácia", en: "Floor plan — functional layout and material specification" }
----
