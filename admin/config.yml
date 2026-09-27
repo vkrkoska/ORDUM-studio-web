@@ -185,6 +185,18 @@ collections:
   - name: pages
     label: Texty stránok
     files:
+      - name: site
+        label: "Kontakt a pätička (na každej stránke)"
+        file: src/_data/site.yml
+        fields:
+          - { label: E-mail, name: email, widget: string, hint: "Zobrazuje sa v hlavičke aj na stránke Kontakt." }
+          - { label: "Telefón (zobrazenie)", name: phone, widget: string, hint: "Napr. „+421 911 441 223“." }
+          - { label: "Telefón (pre odkaz tel:)", name: phone_href, widget: string, hint: "Rovnaké číslo bez medzier, napr. „+421911441223“." }
+          - { label: Instagram odkaz, name: instagram_url, widget: string }
+          - label: Adresa (riadky na stránke Kontakt)
+            name: address
+            widget: list
+            field: { label: Riadok, name: line, widget: string }
       - name: atelier
         label: Ateliér
         file: src/_data/pages/atelier.yml
